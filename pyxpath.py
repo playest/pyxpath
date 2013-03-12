@@ -42,7 +42,7 @@ def anymlToTree(stream, debug=False):
 #cat explxml.xml | ./pypath.py '//country' -a 'concat($0/@name, " ", $0/rank)'
 
 def main():
-    parser = argparse.ArgumentParser(description='pyxslt filter an html flux with an xpath expression.')
+    parser = argparse.ArgumentParser(description='pyxpath filter an html flux with an xpath expression.')
     parser.add_argument('exprs', nargs="+", default=".", help="one or more xpath expressions")
     parser.add_argument('-a', '--action', default=None, help="action to apply on the results. The default is to display the node.")
     parser.add_argument('-f', '--file', nargs="?", default=None, help="file to read, if not set will read stdin.")

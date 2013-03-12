@@ -3,7 +3,7 @@ The --help is pretty self-explanatory.
 ```
 usage: pyxpath [-h] [-a ACTION] [-f [FILE]] [-d] exprs [exprs ...]
 
-pyxslt filter an html flux with an xpath expression.
+pyxpath filter an html flux with an xpath expression.
 
 positional arguments:
   exprs                 one or more xpath expressions
