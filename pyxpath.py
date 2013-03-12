@@ -38,8 +38,8 @@ def anymlToTree(stream, debug=False):
     
     return etree_document
 
-#cat explxml.xml | ./pyxslt.py '//country' -a "concat('--', \$0/@name, ',', '.')"
-#cat explxml.xml | ./pyxslt.py '//country' -a 'concat($0/@name, " ", $0/rank)'
+#cat explxml.xml | ./pypath.py '//country' -a "concat('--', \$0/@name, ',', '.')"
+#cat explxml.xml | ./pypath.py '//country' -a 'concat($0/@name, " ", $0/rank)'
 
 def main():
     parser = argparse.ArgumentParser(description='pyxslt filter an html flux with an xpath expression.')
