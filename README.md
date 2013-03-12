@@ -1,5 +1,6 @@
 The --help is pretty self-explanatory.
 
+```
 usage: pyxpath [-h] [-a ACTION] [-f [FILE]] [-d] exprs [exprs ...]
 
 pyxslt filter an html flux with an xpath expression.
@@ -15,5 +16,6 @@ optional arguments:
   -f [FILE], --file [FILE]
                         file to read, if not set will read stdin.
   -d, --debug           display debug messages.
+```
 
 Try : cat explxml.xml | ./pypath.py '//country'
