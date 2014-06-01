@@ -18,8 +18,6 @@ optional arguments:
   -d, --debug           display debug messages.
 ```
 
-Try : `cat explxml.xml | ./pypath.py '//country'`
-
 # Examples
 
 ```xml
@@ -29,10 +27,15 @@ Try : `cat explxml.xml | ./pypath.py '//country'`
 	<b>
 		<a>aaa</a>
 	</b>
+	<c>
+		<d>ddd</d>
+		<d>dd</d>
+		<d>d</d>
+	</c>
 </root>
 ```
 
-run: `pyxpath -f example.xml '//a'`
+run: `pyxpath -f example.xml '//a'` (or `cat example.xml | pyxpath '//a'`)
 
 will give :
 
@@ -40,6 +43,23 @@ will give :
 <a>a</a>
 <a>aa</a>
 <a>aaa</a>
+```
+
+You can also use the --action flag to do more complicated xpath commands : `pyxpath -f example.xml '//a' -a 'concat("#", $0)'`
+will give :
+```
+#a
+#aa
+#aaa
+```
+Here `$0` refers to the first XPath expression (be careful with bash escaping and $ signs, in general use simple quotes).
+
+With multiple expressions you can do stuffs like that: `pyxpath -f example.xml '//a' '//d' -a 'concat($0, "_", $1)'`
+and get:
+```
+a_ddd
+aa_dd
+aaa_d
 ```
 
 # Install
