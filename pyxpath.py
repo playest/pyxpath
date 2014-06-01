@@ -1,4 +1,3 @@
-#! /usr/bin/env python2.7
 from __future__ import print_function
 
 import argparse
@@ -7,7 +6,6 @@ import html5lib
 import io
 import collections
 
-from page_loader import *
 from html5lib import treebuilders
 from lxml import etree
 from BeautifulSoup import UnicodeDammit
@@ -97,12 +95,3 @@ def main():
                 sys.stderr.write( str(i) + ", " + str(dir(result)) + "\n")
 
     input_stream.close()
-
-if __name__ == "__main__":
-    try:
-        main()
-        sys.stdout.flush()
-    except KeyboardInterrupt:
-        sys.exit(130)
-    except (IOError, OSError):
-        sys.exit(141)

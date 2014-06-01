@@ -1,1 +1,0 @@
-../python/castnamer/castnamer/page_loader.py

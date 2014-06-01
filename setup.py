@@ -7,4 +7,7 @@ setup(name='pyxpath',
       description='PYthon XPATH interpretor',
       author='playest',
       author_email='playest.ff@laposte.net',
+      #packages=['pyxpath'],
+      py_modules=['pyxpath'],
+      scripts = ['bin/pyxpath']
      )
