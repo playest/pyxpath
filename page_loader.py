@@ -1,1 +1,1 @@
-/home/arcady/a200sda6/prog/python/castnamer/castnamer/page_loader.py
+../python/castnamer/castnamer/page_loader.py

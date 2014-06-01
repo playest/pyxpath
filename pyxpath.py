@@ -19,7 +19,7 @@ def format_error_log_lxml(error_log):
 
 def anymlToTree(stream, debug=False):
     ml_string = stream.read()
-    parser = etree.XMLParser(strip_cdata=False)
+    parser = etree.XMLParser(strip_cdata=False, ns_clean=True)
     try:
         if debug: sys.stderr.write("xml\n")
         etree_document = etree.XML(ml_string.decode("utf-8-sig").encode("utf8"), parser)
