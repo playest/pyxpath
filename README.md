@@ -1,4 +1,4 @@
-The --help is pretty self-explanatory.
+# Usage
 
 ```
 usage: pyxpath [-h] [-a ACTION] [-f [FILE]] [-d] exprs [exprs ...]
@@ -20,7 +20,29 @@ optional arguments:
 
 Try : `cat explxml.xml | ./pypath.py '//country'`
 
-=Install
+# Examples
+
+```xml
+<root>
+	<a>a</a>
+	<a>aa</a>
+	<b>
+		<a>aaa</a>
+	</b>
+</root>
+```
+
+run: `pyxpath -f example.xml '//a'`
+
+will give :
+
+```
+<a>a</a>
+<a>aa</a>
+<a>aaa</a>
+```
+
+# Install
 
 To install pyxpath you can download the sources (or clone the repository) and run :
 
