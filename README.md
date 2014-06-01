@@ -18,13 +18,16 @@ optional arguments:
   -d, --debug           display debug messages.
 ```
 
-Try : cat explxml.xml | ./pypath.py '//country'
+Try : `cat explxml.xml | ./pypath.py '//country'`
 
-= Install
+=Install
 
 To install pyxpath you can download the sources (or clone the repository) and run :
+
 	`pip install --user -e path/to/source/directory`
+
 or :
+
 	`pip install --user -e git://github.com/playest/pyxpath.git#egg=pyxpath`
 
 It will install the program into the current directory.
