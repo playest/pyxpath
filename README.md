@@ -27,6 +27,7 @@ optional arguments:
 	<b>
 		<a>aaa</a>
 	</b>
+	<a>aaaa</a>
 	<c>
 		<d>ddd</d>
 		<d>dd</d>
@@ -43,6 +44,7 @@ will give :
 <a>a</a>
 <a>aa</a>
 <a>aaa</a>
+<a>aaaa</a>
 ```
 
 You can also use the --action flag to do more complicated xpath commands : `pyxpath -f example.xml '//a' -a 'concat("#", $0)'`
@@ -51,6 +53,7 @@ will give :
 #a
 #aa
 #aaa
+#aaaa
 ```
 Here `$0` refers to the first XPath expression (be careful with bash escaping and $ signs, in general use simple quotes).
 
@@ -61,6 +64,7 @@ a_ddd
 aa_dd
 aaa_d
 ```
+`$0` refers to '//a' and `$1` refers to '//d'. Note that the <a>aaaa</a> is ignored because there is only 3 <d> tags.
 
 # Install
 

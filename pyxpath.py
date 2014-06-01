@@ -87,11 +87,14 @@ def main():
         i = 0
         for result in results[0]:
             try:
-                if args.debug: sys.stderr.write(etree.tostring(result, pretty_print=True))
+                if args.debug:
+                    sys.stderr.write(etree.tostring(result, pretty_print=True))
+                    #print(type(result))
                 col = {str(k):r[i] for (k,r) in enumerate(results)}
                 print(etree_document.xpath(args.action, **col).encode("utf8"))
                 i += 1
             except IndexError:
-                sys.stderr.write( str(i) + ", " + str(dir(result)) + "\n")
+                if args.debug:
+                    sys.stderr.write( str(i) + ", " + str(dir(result)) + "\n")
 
     input_stream.close()
