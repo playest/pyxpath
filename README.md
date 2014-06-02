@@ -64,7 +64,7 @@ a_ddd
 aa_dd
 aaa_d
 ```
-`$0` refers to '//a' and `$1` refers to '//d'. Note that the <a>aaaa</a> is ignored because there is only 3 <d> tags.
+`$0` refers to '//a' and `$1` refers to '//d'. Note that the `<a>aaaa</a>` is ignored because there is only 3 `<d>` tags.
 
 # Install
 
