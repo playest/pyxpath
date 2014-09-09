@@ -1,7 +1,7 @@
 # Usage
 
 ```
-usage: pyxpath [-h] [-a ACTION] [-f [FILE]] [-d] exprs [exprs ...]
+usage: pyxpath [-h] [-a ACTION] [-f [FILE]] [-d] [-i] exprs [exprs ...]
 
 pyxpath filter an html flux with an xpath expression.
 
@@ -16,6 +16,8 @@ optional arguments:
   -f [FILE], --file [FILE]
                         file to read, if not set will read stdin.
   -d, --debug           display debug messages.
+  -i, --ignore-namespace
+                        ignore namespaces.
 ```
 
 # Examples
