@@ -15,9 +15,12 @@ def format_error_log_lxml(error_log):
     #return "Error at line " + str(error_log[0].line) + ", col " + str(error_log[0].column) + ": " + error_log[0].message
     
 
-def anymlToTree(stream, debug=False):
+def anymlToTree(stream, debug=False, ignore_namespace=False):
     ml_string = stream.read()
-    parser = etree.XMLParser(strip_cdata=False, ns_clean=True)
+    if(ignore_namespace):
+        import re
+        ml_string = re.sub(" ?xmlns=\"[^\"]*\"", "", ml_string)
+    parser = etree.XMLParser(strip_cdata=False, ns_clean=True, remove_blank_text=True)
     try:
         if debug: sys.stderr.write("xml\n")
         etree_document = etree.XML(ml_string.decode("utf-8-sig").encode("utf8"), parser)
@@ -45,6 +48,7 @@ def main():
     parser.add_argument('-a', '--action', default=None, help="action to apply on the results. The default is to display the node.")
     parser.add_argument('-f', '--file', nargs="?", default=None, help="file to read, if not set will read stdin.")
     parser.add_argument('-d', '--debug', action='store_true', help='display debug messages.')
+    parser.add_argument('-i', '--ignore-namespace', action='store_true', help='ignore namespaces.')
     
     args = parser.parse_args()
     
@@ -52,8 +56,7 @@ def main():
         input_stream = sys.stdin
     else:
         input_stream = open(args.file, "r")
-    
-    etree_document = anymlToTree(input_stream, args.debug)
+    etree_document = anymlToTree(input_stream, args.debug, args.ignore_namespace)
     doc = etree.ElementTree()
 
     if args.debug: sys.stderr.write("action: " + str(args.action) + "\n")
