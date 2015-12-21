@@ -17,23 +17,32 @@ def format_error_log_lxml(error_log):
 
 def anymlToTree(stream, debug=False, ignore_namespace=False):
     ml_string = stream.read()
+    #if debug: sys.stderr.write("Original\n" + ml_string + "\n")
     if(ignore_namespace):
         import re
         ml_string = re.sub(" ?xmlns=\"[^\"]*\"", "", ml_string)
-    parser = etree.XMLParser(strip_cdata=False, ns_clean=True, remove_blank_text=True)
+    parser = etree.XMLParser(recover=True, strip_cdata=False, ns_clean=True, remove_blank_text=True)
     try:
-        if debug: sys.stderr.write("xml\n")
+        if debug:
+            sys.stderr.write("xml\n")
         etree_document = etree.XML(ml_string.decode("utf-8-sig").encode("utf8"), parser)
     except (etree.XMLSyntaxError, UnicodeDecodeError) as err:
         try:
-            if debug: sys.stderr.write("err = " + str(err) + "\n" + format_error_log_lxml(parser.error_log) + "\n" + "xml with root\n")
+            if debug:
+                sys.stderr.write("err = " + str(err) + "\n" + format_error_log_lxml(parser.error_log) + "\n" + "xml with root\n")
             ml_string2 = u"<root>" + ml_string.decode("utf-8-sig").encode("utf8") + u"</root>"
             etree_document = etree.XML(ml_string2, parser)
             ml_string = ml_string2
-        except (etree.XMLSyntaxError, UnicodeDecodeError):
-            if debug: sys.stderr.write("html\n" + format_error_log_lxml(parser.error_log) + "\n")
-            parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("lxml"), namespaceHTMLElements=False)
-            etree_document = parser.parse(ml_string, parser)
+        except (etree.XMLSyntaxError, UnicodeDecodeError) as err:
+            try:
+                if debug:
+                    sys.stderr.write("err = " + str(err) + "\n" + format_error_log_lxml(parser.error_log) + "\n" + "html\n")
+                parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("lxml"), namespaceHTMLElements=False)
+                etree_document = parser.parse(ml_string, parser)
+            except UnicodeDecodeError as err:
+                if debug:
+                    sys.stderr.write("err = " + str(err) + "\n")
+
     
     if debug and etree_document is None: sys.stderr.write(format_error_log_lxml(parser.error_log))
     
@@ -49,6 +58,7 @@ def main():
     parser.add_argument('-f', '--file', nargs="?", default=None, help="file to read, if not set will read stdin.")
     parser.add_argument('-d', '--debug', action='store_true', help='display debug messages.')
     parser.add_argument('-i', '--ignore-namespace', action='store_true', help='ignore namespaces.')
+    parser.add_argument('-r', '--recover', action='store_true', help='try hard to parse through broken XML.')
     
     args = parser.parse_args()
     
