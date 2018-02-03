@@ -8,7 +8,7 @@ import collections
 
 from html5lib import treebuilders
 from lxml import etree
-from BeautifulSoup import UnicodeDammit
+from bs4 import UnicodeDammit
 
 def format_error_log_lxml(error_log):
     return str(error_log)
@@ -25,7 +25,7 @@ def anymlToTree(stream, debug=False, ignore_namespace=False):
     try:
         if debug:
             sys.stderr.write("xml\n")
-        etree_document = etree.XML(ml_string.decode("utf-8-sig").encode("utf8"), parser)
+        etree_document = etree.XML(ml_string, parser)
     except (etree.XMLSyntaxError, UnicodeDecodeError) as err:
         try:
             if debug:
@@ -59,8 +59,14 @@ def main():
     parser.add_argument('-d', '--debug', action='store_true', help='display debug messages.')
     parser.add_argument('-i', '--ignore-namespace', action='store_true', help='ignore namespaces.')
     parser.add_argument('-r', '--recover', action='store_true', help='try hard to parse through broken XML.')
+    parser.add_argument('-c', '--closing', action='store_true', help='display closing tag.')
     
     args = parser.parse_args()
+
+    if args.closing:
+        tag_method = "html"
+    else:
+        tag_method = "xml"
     
     if args.file is None:
         input_stream = sys.stdin
@@ -77,10 +83,10 @@ def main():
         for elem in elems:
             try:
                 if args.debug: sys.stderr.write("normal node\n")
-                print(etree.tostring(elem, pretty_print=True), end="")
+                print(etree.tostring(elem, pretty_print=True, method=tag_method).decode("utf8"), end="")
             except TypeError: # a text node
                 if args.debug: sys.stderr.write("text node\n")
-                sys.stdout.write(elem.encode("utf8"))
+                sys.stdout.write(elem)
                 if not elem.endswith(u"\n"):
                     print("")
     else:
@@ -101,7 +107,7 @@ def main():
         for result in results[0]:
             try:
                 if args.debug:
-                    sys.stderr.write(etree.tostring(result, pretty_print=True))
+                    sys.stderr.write(etree.tostring(result, pretty_print=True, method=tag_method).decode("utf8"))
                     #print(type(result))
                 col = {str(k):r[i] for (k,r) in enumerate(results)}
                 print(etree_document.xpath(args.action, **col).encode("utf8"))
